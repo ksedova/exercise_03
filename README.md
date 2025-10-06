@@ -1,3 +1,7 @@
+rm(list=ls())
+
+setwd('D:/university/Amasters/firstsemester/PRG/exercise_03')
+
 # Computational Complexity
 
 ## Computational Complexity
@@ -46,6 +50,23 @@ IndexOfMin(array, first, last)
 4       index ← k
 5   return index
 ```
+IndexOfMin <- function(array, first, last) {
+  index <- first
+  for (k in (first + 1):last) {
+    if (array[k] < array[index]) {
+      index <- k
+    }
+  }
+  
+  return(index)
+}
+
+# --- Test ---
+arr <- c(7, 3, 9, 1, 5, 10, 15, 2, 8, 7, 16)
+IndexOfMin(arr, 5, length(arr))
+# Očekávaný výstup: 4 (protože 1 je nejmenší a je na 4. pozici)
+
+
 
 ### Task 3 
 * In R, implement the function `SelectionSort()` according to the following pseudocode.
@@ -66,7 +87,30 @@ SelectionSort(array, n)
 2     j ← IndexOfMin(array, i, n)
 3     Swap elements array[i] and array[j]
 4   return array
+
 ```
+
+# pomocná funkce pro výměnu dvou prvků
+Swap <- function(array, i, j) {
+  tmp <- array[i]
+  array[i] <- array[j]
+  array[j] <- tmp
+  return(array)
+}
+
+# Selection Sort
+SelectionSort <- function(array, n) {
+  for (i in 1:(n - 1)) {
+    j <- IndexOfMin(array, i, n)
+    array <- Swap(array, i, j)
+  }
+  return(array)
+}
+
+# TEST
+arr2 <- c(7, 3, 9, 1, 5)
+SelectionSort(arr2, length(arr2))
+
 
 ### Task 4
 * In R, implement the function `RecursiveSelectionSort()` according to the following pseudocode.
@@ -92,6 +136,20 @@ RecursiveSelectionSort(array, first, last)
 5   return array
 ```
 
+# Rekurzivní Selection Sort
+RecursiveSelectionSort <- function(array, first, last) {
+  if (first < last) {
+    index <- IndexOfMin(array, first, last)
+    array <- Swap(array, first, index)
+    array <- RecursiveSelectionSort(array, first + 1, last)
+  }
+  return(array)
+}
+
+# --- Test ---
+arr3 <- c(7, 3, 9, 1, 5)
+RecursiveSelectionSort(arr3, 1, length(arr3))
+# Očekávaný výstup: c(1, 3, 5, 7, 9)
 
 ## Download files from GitHub
 <details>
